@@ -57,14 +57,13 @@ class ShipmentAddressProcessor:
 
             # check redis cache
             cached = self.redis_cache.get(address)
-            logger.info(f"find redis cache {cached}")
 
             # check mysql cache
             if cached is None:
                 cached = self.mysql_cache.get(address)
-                logger.info(f"find mysql cache {cached}")
 
             if cached is not None and cached.id is not None:
+                logger.info(f"use cached {cached.id} address")
                 self.gateway.update_raw_shipment(raw_id, cached.id)
             else:
                 logger.info(f"EP validate address {address}")

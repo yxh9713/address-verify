@@ -5,7 +5,7 @@ import hashlib
 
 from entities.shipment import Address
 
-CACHE_TTL_SECONDS = 60 * 60 * 24 * 30 # 30 days
+CACHE_TTL_SECONDS = 60 * 60 * 24 * 90 # 90 days
 
 logger = logging.getLogger(__name__)
 
@@ -16,10 +16,7 @@ class RedisCache:
 
     def set(self, address):
         key = self._address_to_hash(address)
-        ss = self._serialize(address)
-        logger.info(f"redis setting {key}")
-        logger.info(f"ss: {ss}")
-        self.redis_client.set(key, self._serialize(address))
+        self.redis_client.set(key, self._serialize(address), ex=CACHE_TTL_SECONDS)
 
     def get(self, address: Address):
         key = self._address_to_hash(address)
@@ -57,6 +54,11 @@ class RedisCache:
 
     @staticmethod
     def _address_to_hash(address: Address):
-        address_string = (address.address_one + address.city + address.state + address.zip).encode("utf-8")
-        hashed = hashlib.sha256(address_string)
+        address_string = json.dumps({
+            "address_one": address.address_one.strip().upper(),
+            "city": address.city.strip().upper(),
+            "state": address.state.strip().upper(),
+            "zip": address.zip.strip().upper(),
+        })
+        hashed = hashlib.sha256(address_string.encode("utf-8"))
         return "ADDRESS:" + hashed.hexdigest()
