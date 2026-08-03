@@ -45,7 +45,7 @@ class ShipmentGateway:
                     AND (is_validated IS NULL OR is_validated = 0 AND validation_failed = 0)
                     AND updated_at >= (NOW() - INTERVAL %s DAY)
                     AND company_id NOT IN (24, 25, 75, 61)
-                    LIMIT 10
+                    LIMIT 1000
                     """,
                     (worker_id, self.look_back_days),
                 )
