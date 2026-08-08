@@ -1,10 +1,10 @@
-import logging
 import pymysql.err
 
 from core.db import Database
 from entities.address import Address
+from utils.logger import setup_logger
 
-logger = logging.getLogger(__name__)
+logger = setup_logger(__name__)
 
 class MySQLCache:
     def __init__(self, database:Database):
@@ -43,5 +43,5 @@ class MySQLCache:
                 )
 
         except pymysql.err.Error as e:
-            logger.error(e)
+            logger.error(f"mysql cache error: {e}")
             return None

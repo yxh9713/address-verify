@@ -1,4 +1,4 @@
-import logging
+
 from concurrent.futures.thread import ThreadPoolExecutor
 
 import redis
@@ -12,12 +12,13 @@ from adapters.shipment_gateway import ShipmentGateway
 from core.config import load_config
 from core.db import Database
 from core.worker import ShipmentAddressProcessor
+from utils.logger import setup_logger
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(threadName)s] %(levelname)s %(name)s - %(message)s",
 )
-logger = logging.getLogger(__name__)
+logger = setup_logger(__name__)
 
 def main():
     config = load_config()

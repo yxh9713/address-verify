@@ -1,13 +1,13 @@
-import logging
 import json
 import redis
 import hashlib
 
 from entities.shipment import Address
+from utils.logger import setup_logger
 
 CACHE_TTL_SECONDS = 60 * 60 * 24 * 90 # 90 days
 
-logger = logging.getLogger(__name__)
+logger = setup_logger(__name__)
 
 class RedisCache:
 

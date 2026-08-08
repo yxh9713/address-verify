@@ -1,11 +1,9 @@
-import logging
 import pymysql
-from pymysql.connections import Connection
-from pymysql.cursors import Cursor
 
 from core.config import Config
+from utils.logger import setup_logger
 
-logger = logging.getLogger(__name__)
+logger = setup_logger(__name__)
 
 class Database:
     # constructor

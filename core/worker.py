@@ -1,12 +1,12 @@
 import threading
-import logging
 
 from adapters.address_validator import AddressValidator
 from adapters.mysql_cache import MySQLCache
 from adapters.redis_cache import RedisCache
 from adapters.shipment_gateway import ShipmentGateway
+from utils.logger import setup_logger
 
-logger = logging.getLogger(__name__)
+logger = setup_logger(__name__)
 
 class ShipmentAddressProcessor:
     def __init__(

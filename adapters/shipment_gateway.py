@@ -1,12 +1,11 @@
-import logging
 from typing import List
 
 import pymysql
 from core.db import Database
 from entities.shipment import Address, Shipment
+from utils.logger import setup_logger
 
-logger = logging.getLogger(__name__)
-
+logger = setup_logger(__name__)
 
 class ShipmentGateway:
     def __init__(self, database: Database, look_back_days: int = 3):
@@ -138,7 +137,7 @@ class ShipmentGateway:
                 if address.id is not None:
                     self.update_raw_shipment(raw_id, address.id)
         except pymysql.err.Error as e:
-            logger.error("_save_validated_address failed: %s", e)
+            logger.error("save_validated_address failed: %s", e)
 
     @staticmethod
     def _map_rows_to_shipments(rows) -> List[Shipment]:
