@@ -14,10 +14,6 @@ from core.db import Database
 from core.worker import ShipmentAddressProcessor
 from utils.logger import setup_logger
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(threadName)s] %(levelname)s %(name)s - %(message)s",
-)
 logger = setup_logger(__name__)
 
 def main():
