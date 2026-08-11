@@ -5,6 +5,9 @@ from easypost.errors import ApiError
 
 from adapters.address_validator import AddressValidator
 from entities.address import Address
+from utils.logger import setup_logger
+
+logger = setup_logger(__name__)
 
 class EpAddress(AddressValidator):
     def __init__(self, easypost_api_key:str):
@@ -56,7 +59,7 @@ class EpAddress(AddressValidator):
             if hasattr(e, 'errors') and e.errors:
                 print("Detailed Errors:")
                 for err in e.errors:
-                    print(f" - {err}")
+                    logger.error(f" EasyPost API Error: {err}")
             print("--------------------------\n")
 
             # return the unvalidated address on failure

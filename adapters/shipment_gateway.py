@@ -80,12 +80,12 @@ class ShipmentGateway:
                         validator_locked = NULL,
                         validator_thread = NULL,
                         is_validated = 0
-                    WHERE raw_id = %s            
+                    WHERE id = %s            
                     """,
                     (raw_id,)
                 )
         except pymysql.err.Error as e:
-            logger.error(f"{raw_id} mark failed: {e}")
+            logger.error(f"{raw_id} mark failed error: {e}")
 
     def update_raw_shipment(self, raw_id: int, validated_id: int):
         conn = self.database.get_connection()
