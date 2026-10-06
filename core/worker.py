@@ -66,7 +66,7 @@ class ShipmentAddressProcessor:
                 logger.info(f"use cached {cached.id} address")
                 self.gateway.update_raw_shipment(raw_id, cached.id)
             else:
-                logger.info(f"EP validate address {address}")
+                logger.info("%s validate address %s", type(self.validator).__name__, address)
                 validated = self.validator.validate(address)
                 if self.gateway.save_address(raw_id, validated):
                     self.redis_cache.set(validated)

@@ -5,7 +5,7 @@ import redis
 import threading
 import signal # intercept messages sent directly by the OS
 
-from adapters import ep_address
+from adapters.validator_factory import create_validator
 from adapters.mysql_cache import MySQLCache
 from adapters.redis_cache import RedisCache
 from adapters.shipment_gateway import ShipmentGateway
@@ -18,6 +18,7 @@ logger = setup_logger(__name__)
 
 def main():
     config = load_config()
+    validator = create_validator(config)
 
     # shared clients
     redis_client = redis.Redis(
@@ -28,7 +29,6 @@ def main():
         protocol=2,
     )
     redis_cache = RedisCache(redis_client)
-    validator = ep_address.EpAddress(config.easypost_api_key)
 
     stop_event = threading.Event()
 
@@ -73,7 +73,7 @@ def main():
     # redis_cache = RedisCache(redis_client)
     # mysql_cache = MySQLCache(database)
     # gateway = ShipmentGateway(database)
-    # validator = ep_address.EpAddress(config.easypost_api_key)
+    # validator = create_validator(config)
     # processor = ShipmentAddressProcessor(
     #     worker_id=worker_id,
     #     gateway=gateway,

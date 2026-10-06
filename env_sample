@@ -1,19 +1,25 @@
-# Threading Config
+# Worker behavior (existing default: 5 seconds between idle polls)
 CORE_POOL_SIZE=3
 TIMEOUT_MS=5000
+LOOK_BACK=4
 
-# Redis
-REDIS_HOST=
-REDIS_PORT=
+# Redis (the worker uses database 1)
+REDIS_HOST=localhost
+REDIS_PORT=6379
 
-# MySQL Credentials
-DB_HOST=
-DB_USER=
-DB_PASSWORD=
-DB_NAME=
-DB_PORT=
+# MySQL
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=your_mysql_user
+DB_PASSWORD=your_mysql_password
+DB_NAME=your_database
 
-LOOK_BACK=
+# Address provider: ep (default) or smarty
+PROCESSOR=ep
 
-# EasyPost Credentials
-EASYPOST_API_KEY=
+# Required only when PROCESSOR=ep
+EASYPOST_API_KEY=your_easypost_api_key
+
+# Required only when PROCESSOR=smarty
+SMARTY_AUTH_ID=your_smarty_auth_id
+SMARTY_AUTH_TOKEN=your_smarty_auth_token
